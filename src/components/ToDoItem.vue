@@ -2,7 +2,7 @@
   <div class="item">
     <input
       type="checkbox"
-      :value="item.completed"
+      :checked="item.completed"
       @input="toggleCompletedTodo"
     />
     <div :class="{ completed: item.completed }">
