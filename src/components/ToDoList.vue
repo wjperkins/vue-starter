@@ -1,5 +1,7 @@
 <template>
   <div class="todo-list">
+    <button @click="loadTodos">Load To-dos</button>
+    <button @click="saveTodos">Save To-dos</button>
     <h1>To-do list</h1>
     <input
       autofocus
@@ -44,6 +46,14 @@ export default {
     },
     toggleCompletedTodo(index) {
       this.todos[index].completed = !(this.todos[index].completed);
+    },
+    loadTodos() {
+      if(localStorage.getItem('todos')) {
+        this.todos = JSON.parse(localStorage.getItem('todos'));
+      }
+    },
+    saveTodos() {
+      localStorage.setItem('todos', JSON.stringify(this.todos))
     }
   }
 }
