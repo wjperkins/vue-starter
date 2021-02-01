@@ -1,6 +1,13 @@
 <template>
   <div class="item">
-    {{value}}
+    <input
+      type="checkbox"
+      :value="item.completed"
+      @input="toggleCompletedTodo"
+    />
+    <div :class="{ completed: item.completed }">
+      {{item.value}}
+    </div>
     <button @click="deleteTodo" class="delete-btn">
       Delete
     </button>
@@ -11,12 +18,15 @@
 export default {
   name: 'ToDoItem',
   props: {
-    value: String
+    item: { value: String, completed: Boolean }
   },
-  emits: ['delete'],
+  emits: ['delete', 'toggleComplete'],
   methods: {
     deleteTodo() {
       this.$emit('delete')
+    },
+    toggleCompletedTodo() {
+      this.$emit('toggleComplete')
     }
   }
 }
@@ -35,6 +45,9 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
+  }
+  .item .completed {
+    text-decoration: line-through;
   }
   .item .delete-btn {
     color: #2e3440;

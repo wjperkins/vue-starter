@@ -1,42 +1,49 @@
 <template>
   <div class="todo-list">
-    <h1>Todo list</h1>
+    <h1>To-do list</h1>
     <input
       autofocus
       class="todo-input"
-      v-model="newTodo"
-      placeholder="Add a todo..." 
+      v-model="newTodo.value"
+      placeholder="Add a to-do..." 
       @keyup.enter="addTodo"
     />
     <ToDoItem
       v-for="(todo, index) in todos"
       :key="todo"
-      :value="todo"
+      :item="todo"
       @delete="deleteTodo(index)"
+      @toggleComplete="toggleCompletedTodo(index)"
     />
   </div>
 </template>
 
 <script>
 import ToDoItem from './ToDoItem.vue'
+
+const blankTodo = { value: '', completed: false };
+
 export default {
   components: { ToDoItem },
   name: 'ToDoList',
   data() {
     return {
       todos: [],
-      newTodo: '',
+      newTodo: { ...blankTodo },
     }
   },
   methods: {
     addTodo() {
-      if(this.newTodo.trim()) { 
+      if(this.newTodo.value.trim()) { 
         this.todos.unshift(this.newTodo);
-        this.newTodo = '';
+        this.newTodo = { ...blankTodo };
       }
     },
     deleteTodo(index) {
       this.todos.splice(index, 1);
+    },
+    toggleCompletedTodo(index) {
+      this.todos[index].completed = !(this.todos[index].completed);
     }
   }
 }
