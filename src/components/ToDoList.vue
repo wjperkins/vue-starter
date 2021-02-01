@@ -1,7 +1,5 @@
 <template>
   <div class="todo-list">
-    <button @click="loadTodos">Load To-dos</button>
-    <button @click="saveTodos">Save To-dos</button>
     <h1>To-do list</h1>
     <input
       autofocus
@@ -39,13 +37,16 @@ export default {
       if(this.newTodo.value.trim()) { 
         this.todos.unshift(this.newTodo);
         this.newTodo = { ...blankTodo };
+        this.saveTodos();
       }
     },
     deleteTodo(index) {
       this.todos.splice(index, 1);
+      this.saveTodos();
     },
     toggleCompletedTodo(index) {
       this.todos[index].completed = !(this.todos[index].completed);
+      this.saveTodos();
     },
     loadTodos() {
       if(localStorage.getItem('todos')) {
@@ -55,7 +56,10 @@ export default {
     saveTodos() {
       localStorage.setItem('todos', JSON.stringify(this.todos))
     }
-  }
+  },
+  mounted() {
+    this.loadTodos();
+  },
 }
 </script>
 
