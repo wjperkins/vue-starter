@@ -58,5 +58,5 @@ export default {
     flex-shrink: 0;
     margin-left: 5px;
     padding: 5px;
-  };
+  }
 </style>
